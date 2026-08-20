@@ -19,10 +19,33 @@ function unwrap<D>(res: { data: D | null; error: { message: string } | null }): 
   return res.data as D;
 }
 
+export const MEDIA_BUCKET = "media";
+
+/**
+ * Media is kept in a private bucket. Values may be either an absolute URL
+ * (entered by the admin) or a storage path uploaded through the dashboard —
+ * storage paths get resolved to a short-lived signed URL.
+ */
+export async function resolveMedia(value: string | null | undefined): Promise<string> {
+  if (!value) return "";
+  if (/^(https?:|data:|\/)/.test(value)) return value;
+  const { data } = await supabase.storage.from(MEDIA_BUCKET).createSignedUrl(value, 60 * 60);
+  return data?.signedUrl ?? "";
+}
+
 export const profileQuery = queryOptions({
   queryKey: ["profile"],
-  queryFn: async () =>
-    unwrap(await supabase.from("profile").select("*").limit(1).maybeSingle()) as Profile | null,
+  queryFn: async () => {
+    const profile = unwrap(
+      await supabase.from("profile").select("*").limit(1).maybeSingle(),
+    ) as Profile | null;
+    if (!profile) return null;
+    const [avatar_url, resume_url] = await Promise.all([
+      resolveMedia(profile.avatar_url),
+      resolveMedia(profile.resume_url),
+    ]);
+    return { ...profile, avatar_url, resume_url };
+  },
 });
 
 export const statsQuery = queryOptions({
@@ -47,10 +70,17 @@ export const skillsQuery = queryOptions({
 
 export const projectsQuery = queryOptions({
   queryKey: ["projects"],
-  queryFn: async () =>
-    unwrap(
+  queryFn: async () => {
+    const projects = unwrap(
       await supabase.from("projects").select("*").order("sort_order"),
-    ) as Project[],
+    ) as Project[];
+    return Promise.all(
+      projects.map(async (project) => ({
+        ...project,
+        cover_url: await resolveMedia(project.cover_url),
+      })),
+    );
+  },
 });
 
 export const educationQuery = queryOptions({
@@ -94,7 +124,12 @@ export function projectQuery(slug: string) {
           .eq("project_id", project.id)
           .order("sort_order"),
       ) as ProjectMedia[];
-      return { project, media };
+      return {
+        project: { ...project, cover_url: await resolveMedia(project.cover_url) },
+        media: await Promise.all(
+          media.map(async (item) => ({ ...item, url: await resolveMedia(item.url) })),
+        ),
+      };
     },
   });
 }
