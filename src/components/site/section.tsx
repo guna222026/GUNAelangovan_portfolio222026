@@ -14,9 +14,9 @@ export function Section({
   id?: string;
   eyebrow?: string;
   title?: string;
-  description?: string;
+  description?: string | undefined;
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
   action?: ReactNode;
 }) {
   return (
