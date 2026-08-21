@@ -131,12 +131,25 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { pathname } = useLocation();
+  const isAdmin = pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-screen flex-col">
+        {!isAdmin && <SiteNav />}
+        <main className="flex-1">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        {!isAdmin && <SiteChrome />}
+      </div>
       <Toaster position="top-right" richColors />
     </QueryClientProvider>
   );
+}
+
+function SiteChrome() {
+  const { data: profile } = useQuery(profileQuery);
+  return <SiteFooter profile={profile ?? null} />;
 }
