@@ -182,6 +182,36 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          created_at: string
+          device: string
+          id: string
+          label: string
+          path: string
+          referrer: string
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          device?: string
+          id?: string
+          label?: string
+          path: string
+          referrer?: string
+          visitor_id?: string
+        }
+        Update: {
+          created_at?: string
+          device?: string
+          id?: string
+          label?: string
+          path?: string
+          referrer?: string
+          visitor_id?: string
+        }
+        Relationships: []
+      }
       profile: {
         Row: {
           about: string
