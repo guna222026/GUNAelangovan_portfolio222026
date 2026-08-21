@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { useLocation } from "@tanstack/react-router";
+import { SiteNav } from "../components/site/site-nav";
+import { SiteFooter } from "../components/site/site-footer";
+import { profileQuery } from "../lib/portfolio";
 import {
   Outlet,
   Link,
