@@ -38,17 +38,25 @@ export const Route = createFileRoute("/admin")({
 
 function LoginCard() {
   const [pending, setPending] = useState(false);
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const email = String(data.get("email"));
+    const password = String(data.get("password"));
     setPending(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: String(data.get("email")),
-      password: String(data.get("password")),
-    });
+    const { error } =
+      mode === "signin"
+        ? await supabase.auth.signInWithPassword({ email, password })
+        : await supabase.auth.signUp({
+            email,
+            password,
+            options: { emailRedirectTo: `${window.location.origin}/admin` },
+          });
     setPending(false);
     if (error) toast.error(error.message);
+    else if (mode === "signup") toast.success("Account created — you're signed in.");
   };
 
   return (
@@ -60,7 +68,9 @@ function LoginCard() {
         <form onSubmit={onSubmit} className="surface-card grid gap-5 p-7">
           <div className="flex items-center gap-2">
             <ShieldCheck className="size-4 text-primary" />
-            <h1 className="font-display text-lg font-semibold">Admin sign in</h1>
+            <h1 className="font-display text-lg font-semibold">
+              {mode === "signin" ? "Admin sign in" : "Create admin account"}
+            </h1>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -73,12 +83,22 @@ function LoginCard() {
               name="password"
               type="password"
               required
-              autoComplete="current-password"
+              minLength={8}
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
             />
           </div>
           <Button type="submit" disabled={pending}>
-            {pending ? "Signing in…" : "Sign in"}
+            {pending ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
           </Button>
+          <button
+            type="button"
+            className="text-xs text-muted-foreground hover:text-foreground"
+            onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+          >
+            {mode === "signin"
+              ? "First time? Create your admin account"
+              : "Already have an account? Sign in"}
+          </button>
         </form>
       </div>
     </div>
