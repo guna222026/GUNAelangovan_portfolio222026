@@ -1,0 +1,1 @@
+UPDATE public.profile SET avatar_url = '' WHERE avatar_url ILIKE '%.pdf';
