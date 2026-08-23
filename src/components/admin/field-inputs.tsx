@@ -155,3 +155,102 @@ export function FieldInput({
     </div>
   );
 }
+function MediaField({
+  field,
+  value,
+  onChange,
+}: {
+  field: FieldDef;
+  value: unknown;
+  onChange: (next: unknown) => void;
+}) {
+  const kind: MediaKind = field.accept ?? "image";
+  const [uploading, setUploading] = useState(false);
+  const [preview, setPreview] = useState("");
+  const current = String(value ?? "");
+
+  useEffect(() => {
+    let cancelled = false;
+    if (kind === "image" && current) {
+      void resolveMedia(current).then((url) => {
+        if (!cancelled) setPreview(url);
+      });
+    } else {
+      setPreview("");
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [current, kind]);
+
+  const handleFile = async (file: File) => {
+    setUploading(true);
+    try {
+      validateMediaFile(file, kind);
+      let payload: File | Blob = file;
+      let extension: string | undefined;
+      if (kind === "image") {
+        const processed = await processImage(file, { aspect: field.aspect });
+        payload = processed.blob;
+        extension = processed.extension;
+      }
+      const path = await uploadMedia(payload, field.name, extension);
+      onChange(path);
+      toast.success(
+        kind === "image" ? "Image optimized and uploaded" : "File uploaded",
+      );
+    } catch (error) {
+      toast.error((error as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="grid gap-2">
+      <Label htmlFor={field.name}>{field.label}</Label>
+      {preview ? (
+        <img
+          src={preview}
+          alt={`${field.label} preview`}
+          className="h-28 w-28 rounded-lg border border-border object-cover"
+        />
+      ) : null}
+      <Input
+        id={field.name}
+        value={current}
+        placeholder={field.placeholder ?? "Upload a file or paste a URL"}
+        onChange={(event) => onChange(event.target.value)}
+      />
+      <div className="flex items-center gap-2">
+        <Button type="button" variant="outline" size="sm" disabled={uploading} asChild>
+          <label className="cursor-pointer">
+            <Upload className="size-4" /> {uploading ? "Processing…" : "Upload"}
+            <input
+              type="file"
+              className="hidden"
+              accept={acceptAttribute(kind)}
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.target.value = "";
+                if (file) void handleFile(file);
+              }}
+            />
+          </label>
+        </Button>
+        {current ? (
+          <Button type="button" variant="ghost" size="sm" onClick={() => onChange("")}>
+            Clear
+          </Button>
+        ) : null}
+        <span className="text-xs text-muted-foreground">
+          {kind === "image"
+            ? `JPG/PNG/WebP up to 10 MB${field.aspect ? " · auto-cropped" : " · auto-resized"}`
+            : kind === "pdf"
+              ? "PDF up to 15 MB"
+              : "Up to 20 MB"}
+        </span>
+      </div>
+    </div>
+  );
+}
