@@ -189,7 +189,10 @@ function MediaField({
       let payload: File | Blob = file;
       let extension: string | undefined;
       if (kind === "image") {
-        const processed = await processImage(file, { aspect: field.aspect });
+        const processed = await processImage(
+          file,
+          field.aspect ? { aspect: field.aspect } : {},
+        );
         payload = processed.blob;
         extension = processed.extension;
       }
