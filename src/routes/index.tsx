@@ -23,18 +23,22 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Guna E — Software Engineer, AI & Blockchain Developer" },
+      { title: "Guna E — Software Engineering Portfolio" },
       {
         name: "description",
         content:
-          "Portfolio of Guna E: M.Tech Software Engineering at VIT. Blockchain verification systems, AI assistants and full-stack products.",
+          "Software Engineering portfolio of Guna E — showcasing AI, machine learning, blockchain, web development projects, technical skills, education and experience.",
       },
-      { property: "og:title", content: "Guna E — Software Engineer, AI & Blockchain Developer" },
+      { property: "og:title", content: "Guna E — Software Engineering Portfolio" },
       {
         property: "og:description",
-        content: "Blockchain verification systems, AI assistants and full-stack products.",
+        content:
+          "Software Engineering portfolio showcasing AI, machine learning, blockchain and full-stack projects by Guna E.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Index,
 });

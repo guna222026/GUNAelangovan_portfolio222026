@@ -47,7 +47,7 @@ export const projectsCollection: CollectionConfig = {
     { name: "architecture_steps", label: "Architecture steps", type: "list" },
     { name: "features", label: "Key features", type: "list" },
     { name: "highlights", label: "Highlights", type: "list" },
-    { name: "cover_url", label: "Cover image", type: "media" },
+    { name: "cover_url", label: "Cover image", type: "media", accept: "image", aspect: 16 / 9 },
     { name: "demo_url", label: "Live demo URL", type: "text" },
     { name: "github_url", label: "GitHub URL", type: "text" },
     { name: "start_date", label: "Start date", type: "date" },

@@ -83,20 +83,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Guna E — Software Engineer, AI & Blockchain Developer" },
+      { title: "Guna E — Software Engineering Portfolio" },
       {
         name: "description",
         content:
-          "Portfolio of Guna E — M.Tech Software Engineering student at VIT building AI, blockchain and full-stack applications.",
+          "Software Engineering portfolio of Guna E — showcasing AI, machine learning, blockchain, web development projects, technical skills, education and experience.",
       },
       { name: "author", content: "Guna E" },
-      { property: "og:title", content: "Guna E — Software Engineer, AI & Blockchain Developer" },
+      { property: "og:title", content: "Guna E — Software Engineering Portfolio" },
       {
         property: "og:description",
-        content: "AI, blockchain and full-stack engineering projects by Guna E.",
+        content:
+          "Software Engineering portfolio showcasing AI, machine learning, blockchain and full-stack projects by Guna E.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Guna E — Software Engineering Portfolio" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Guna E — Software Engineering Portfolio" },
+      {
+        name: "twitter:description",
+        content:
+          "Software Engineering portfolio showcasing AI, machine learning, blockchain and full-stack projects by Guna E.",
+      },
     ],
     links: [
       {
@@ -109,7 +117,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "64x64" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
     ],
   }),
   shellComponent: RootShell,

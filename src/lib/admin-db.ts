@@ -38,10 +38,19 @@ export async function deleteRow(name: string, id: string) {
   fail(result);
 }
 
-export async function uploadMedia(file: File, folder: string): Promise<string> {
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-").toLowerCase();
-  const path = `${folder}/${Date.now()}-${safeName}`;
-  const { error } = await supabase.storage.from("media").upload(path, file, { upsert: true });
+export async function uploadMedia(
+  file: File | Blob,
+  folder: string,
+  extension?: string,
+): Promise<string> {
+  const ext =
+    extension ??
+    (file instanceof File ? file.name.split(".").pop()?.toLowerCase() : undefined) ??
+    "bin";
+  const safeFolder = folder.replace(/[^a-zA-Z0-9_-]/g, "-");
+  const path = `${safeFolder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const options = { upsert: false, ...(file.type ? { contentType: file.type } : {}) };
+  const { error } = await supabase.storage.from("media").upload(path, file, options);
   if (error) throw new Error(error.message);
   return path;
 }
