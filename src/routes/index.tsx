@@ -39,7 +39,6 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
-    ],
   }),
   component: Index,
 });
