@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,13 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { uploadMedia } from "@/lib/admin-db";
+import { resolveMedia } from "@/lib/portfolio";
+import {
+  acceptAttribute,
+  processImage,
+  validateMediaFile,
+  type MediaKind,
+} from "@/lib/media";
 
 export type FieldType =
   | "text"
@@ -25,6 +32,10 @@ export type FieldDef = {
   placeholder?: string;
   rows?: number;
   full?: boolean;
+  /** media fields: what file kind is allowed (defaults to "image") */
+  accept?: MediaKind;
+  /** media fields: center-crop images to this width/height ratio before upload */
+  aspect?: number;
 };
 
 export function FieldInput({
