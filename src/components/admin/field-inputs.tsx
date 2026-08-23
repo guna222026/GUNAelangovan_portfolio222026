@@ -48,7 +48,6 @@ export function FieldInput({
   onChange: (next: unknown) => void;
 }) {
   const [draft, setDraft] = useState("");
-  const [uploading, setUploading] = useState(false);
 
   if (field.type === "switch") {
     return (
