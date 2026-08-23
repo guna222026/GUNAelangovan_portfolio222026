@@ -116,48 +116,7 @@ export function FieldInput({
   }
 
   if (field.type === "media") {
-    return (
-      <div className="grid gap-2">
-        <Label htmlFor={field.name}>{field.label}</Label>
-        <Input
-          id={field.name}
-          value={String(value ?? "")}
-          placeholder={field.placeholder ?? "Upload a file or paste a URL"}
-          onChange={(event) => onChange(event.target.value)}
-        />
-        <div className="flex items-center gap-2">
-          <Button type="button" variant="outline" size="sm" disabled={uploading} asChild>
-            <label className="cursor-pointer">
-              <Upload className="size-4" /> {uploading ? "Uploading…" : "Upload"}
-              <input
-                type="file"
-                className="hidden"
-                onChange={async (event) => {
-                  const file = event.target.files?.[0];
-                  if (!file) return;
-                  setUploading(true);
-                  try {
-                    const path = await uploadMedia(file, field.name);
-                    onChange(path);
-                    toast.success("File uploaded");
-                  } catch (error) {
-                    toast.error((error as Error).message);
-                  } finally {
-                    setUploading(false);
-                    event.target.value = "";
-                  }
-                }}
-              />
-            </label>
-          </Button>
-          {value ? (
-            <Button type="button" variant="ghost" size="sm" onClick={() => onChange("")}>
-              Clear
-            </Button>
-          ) : null}
-        </div>
-      </div>
-    );
+    return <MediaField field={field} value={value} onChange={onChange} />;
   }
 
   if (field.type === "textarea") {
