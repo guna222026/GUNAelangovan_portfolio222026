@@ -49,10 +49,8 @@ export async function uploadMedia(
     "bin";
   const safeFolder = folder.replace(/[^a-zA-Z0-9_-]/g, "-");
   const path = `${safeFolder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from("media").upload(path, file, {
-    upsert: false,
-    contentType: file.type || undefined,
-  });
+  const options = { upsert: false, ...(file.type ? { contentType: file.type } : {}) };
+  const { error } = await supabase.storage.from("media").upload(path, file, options);
   if (error) throw new Error(error.message);
   return path;
 }
