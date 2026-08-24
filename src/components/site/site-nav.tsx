@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, Terminal } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
+import geLogo from "@/assets/ge-logo.png";
 
 const SECTIONS = [
   { id: "home", label: "Home" },
@@ -67,11 +68,25 @@ export function SiteNav() {
       )}
     >
       <nav className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex size-8 items-center justify-center rounded-md bg-primary/15 text-primary">
-            <Terminal className="size-4" />
-          </span>
-          <span className="font-display text-sm font-semibold tracking-tight">GUNA E</span>
+        <Link
+          to="/"
+          aria-label="Guna E — Home"
+          className="group flex items-center rounded-lg outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+          onClick={(e) => {
+            if (pathname === "/") {
+              e.preventDefault();
+              document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+        >
+          <img
+            src={geLogo}
+            alt="GE — Guna E logo"
+            width={512}
+            height={512}
+            className="size-10 select-none transition-all duration-300 ease-out group-hover:scale-110 group-hover:drop-shadow-[0_0_14px_var(--primary)] sm:size-11"
+            draggable={false}
+          />
         </Link>
 
         <div className="hidden items-center gap-1 lg:flex">
