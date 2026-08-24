@@ -20,6 +20,7 @@ import {
 import { ProfileEditor } from "@/components/admin/profile-editor";
 import { SkillsManager } from "@/components/admin/skills-manager";
 import { MessagesPanel } from "@/components/admin/messages-panel";
+import { AnalyticsPanel } from "@/components/admin/analytics-panel";
 import { messagesQuery } from "@/lib/portfolio";
 
 export const Route = createFileRoute("/admin")({
@@ -114,6 +115,7 @@ const TABS = [
   { value: "achievements", label: "Achievements" },
   { value: "stats", label: "Stats" },
   { value: "messages", label: "Messages" },
+  { value: "analytics", label: "Analytics" },
 ];
 
 function AdminPage() {
@@ -199,6 +201,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="messages">
           <MessagesPanel />
+        </TabsContent>
+        <TabsContent value="analytics">
+          <AnalyticsPanel />
         </TabsContent>
       </Tabs>
     </div>
