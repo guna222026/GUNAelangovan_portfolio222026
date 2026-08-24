@@ -16,6 +16,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { themeBootScript } from "../lib/theme";
+import { trackPageView } from "../lib/analytics";
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
@@ -147,6 +148,10 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith("/admin");
+
+  useEffect(() => {
+    trackPageView(pathname);
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
