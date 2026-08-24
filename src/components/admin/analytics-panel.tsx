@@ -43,8 +43,8 @@ export function AnalyticsPanel() {
   });
 
   const { data: messages = [] } = useQuery({
+    ...messagesQuery,
     queryKey: ["admin", "messages"],
-    queryFn: messagesQuery.queryFn,
   });
 
   const stats = useMemo(() => {
@@ -78,7 +78,7 @@ export function AnalyticsPanel() {
     };
   }, [views]);
 
-  const unread = messages.filter((m) => !m.read).length;
+  const unread = messages.filter((m) => !m.is_read).length;
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Loading…</p>;
 
