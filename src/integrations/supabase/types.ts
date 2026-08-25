@@ -217,6 +217,15 @@ export type Database = {
           about: string
           available: boolean
           avatar_url: string
+          contact_availability_text: string
+          contact_button_text: string
+          contact_card_title: string
+          contact_description: string
+          contact_eyebrow: string
+          contact_form_description: string
+          contact_form_title: string
+          contact_heading: string
+          contact_links: Json
           created_at: string
           email: string
           full_name: string
@@ -239,6 +248,15 @@ export type Database = {
           about?: string
           available?: boolean
           avatar_url?: string
+          contact_availability_text?: string
+          contact_button_text?: string
+          contact_card_title?: string
+          contact_description?: string
+          contact_eyebrow?: string
+          contact_form_description?: string
+          contact_form_title?: string
+          contact_heading?: string
+          contact_links?: Json
           created_at?: string
           email?: string
           full_name?: string
@@ -261,6 +279,15 @@ export type Database = {
           about?: string
           available?: boolean
           avatar_url?: string
+          contact_availability_text?: string
+          contact_button_text?: string
+          contact_card_title?: string
+          contact_description?: string
+          contact_eyebrow?: string
+          contact_form_description?: string
+          contact_form_title?: string
+          contact_heading?: string
+          contact_links?: Json
           created_at?: string
           email?: string
           full_name?: string
