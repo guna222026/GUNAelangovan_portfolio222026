@@ -21,6 +21,7 @@ import { ProfileEditor } from "@/components/admin/profile-editor";
 import { SkillsManager } from "@/components/admin/skills-manager";
 import { MessagesPanel } from "@/components/admin/messages-panel";
 import { AnalyticsPanel } from "@/components/admin/analytics-panel";
+import { ContactEditor } from "@/components/admin/contact-editor";
 import { messagesQuery } from "@/lib/portfolio";
 
 export const Route = createFileRoute("/admin")({
@@ -114,6 +115,7 @@ const TABS = [
   { value: "education", label: "Education" },
   { value: "achievements", label: "Achievements" },
   { value: "stats", label: "Stats" },
+  { value: "contact", label: "Contact" },
   { value: "messages", label: "Messages" },
   { value: "analytics", label: "Analytics" },
 ];
@@ -198,6 +200,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="stats">
           <CollectionManager config={statsCollection} />
+        </TabsContent>
+        <TabsContent value="contact">
+          <ContactEditor />
         </TabsContent>
         <TabsContent value="messages">
           <MessagesPanel />

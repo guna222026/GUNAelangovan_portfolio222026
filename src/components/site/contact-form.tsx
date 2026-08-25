@@ -7,7 +7,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 
-export function ContactForm() {
+export function ContactForm({
+  title,
+  description,
+  buttonText,
+}: {
+  title?: string | undefined;
+  description?: string | undefined;
+  buttonText?: string | undefined;
+}) {
   const [pending, setPending] = useState(false);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +46,14 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="surface-card grid gap-5 p-6 sm:p-8">
+      {(title || description) && (
+        <div className="grid gap-1">
+          {title && <h3 className="font-display text-lg font-semibold">{title}</h3>}
+          {description && (
+            <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
+          )}
+        </div>
+      )}
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="grid gap-2">
           <Label htmlFor="name">Name</Label>
@@ -63,7 +79,7 @@ export function ContactForm() {
         <Textarea id="body" name="body" required rows={6} placeholder="How can I help?" />
       </div>
       <Button type="submit" size="lg" disabled={pending} className="justify-self-start">
-        <Send className="size-4" /> {pending ? "Sending…" : "Send message"}
+        <Send className="size-4" /> {pending ? "Sending…" : buttonText || "Send message"}
       </Button>
     </form>
   );

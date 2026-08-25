@@ -60,6 +60,14 @@ function Index() {
   const featured = projects.filter((p) => p.featured).slice(0, 4);
   const shown = featured.length ? featured : projects.slice(0, 4);
 
+  const contactLinks = (Array.isArray(profile?.contact_links) ? profile.contact_links : [])
+    .map((raw) => {
+      const text = typeof raw === "string" ? raw : "";
+      const [label, url] = text.split("|").map((part) => part.trim());
+      return { label: label || url || "", url: url || "" };
+    })
+    .filter((link) => link.url.length > 0);
+
   return (
     <>
       <Hero profile={profile ?? null} stats={stats} />
@@ -272,14 +280,14 @@ function Index() {
 
       <Section
         id="contact"
-        eyebrow="06 — Contact"
-        title="Let's build something"
-        description="Open to software engineering roles, internships and collaborations. Messages land straight in the private dashboard."
+        eyebrow={profile?.contact_eyebrow || "06 — Contact"}
+        title={profile?.contact_heading || "Let's build something"}
+        description={profile?.contact_description || undefined}
       >
         <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
             <div className="surface-card h-full p-6 sm:p-8">
-              <p className="eyebrow mb-4">Direct</p>
+              <p className="eyebrow mb-4">{profile?.contact_card_title || "Direct"}</p>
               <div className="grid gap-4 text-sm">
                 {profile?.email && (
                   <a href={`mailto:${profile.email}`} className="flex items-center gap-3 text-muted-foreground hover:text-foreground">
@@ -296,11 +304,35 @@ function Index() {
                     <MapPin className="size-4 text-primary" /> {profile.location}
                   </span>
                 )}
+                {profile?.linkedin_url && (
+                  <a href={profile.linkedin_url} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-foreground">
+                    <Icons.Linkedin className="size-4 text-primary" /> <span className="break-all">LinkedIn</span>
+                  </a>
+                )}
+                {profile?.github_url && (
+                  <a href={profile.github_url} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-foreground">
+                    <Icons.Github className="size-4 text-primary" /> <span className="break-all">GitHub</span>
+                  </a>
+                )}
+                {contactLinks.map((link) => (
+                  <a key={link.url} href={link.url} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-foreground">
+                    <Icons.Link2 className="size-4 text-primary" /> <span className="break-all">{link.label}</span>
+                  </a>
+                ))}
               </div>
+              {profile?.contact_availability_text && (
+                <p className="mt-6 text-xs text-muted-foreground">
+                  {profile.contact_availability_text}
+                </p>
+              )}
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <ContactForm />
+            <ContactForm
+              title={profile?.contact_form_title || undefined}
+              description={profile?.contact_form_description || undefined}
+              buttonText={profile?.contact_button_text || undefined}
+            />
           </Reveal>
         </div>
       </Section>
