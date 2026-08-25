@@ -60,6 +60,14 @@ function Index() {
   const featured = projects.filter((p) => p.featured).slice(0, 4);
   const shown = featured.length ? featured : projects.slice(0, 4);
 
+  const contactLinks = (Array.isArray(profile?.contact_links) ? profile.contact_links : [])
+    .map((raw) => {
+      const text = typeof raw === "string" ? raw : "";
+      const [label, url] = text.split("|").map((part) => part.trim());
+      return { label: label || url || "", url: url || "" };
+    })
+    .filter((link) => link.url.length > 0);
+
   return (
     <>
       <Hero profile={profile ?? null} stats={stats} />
