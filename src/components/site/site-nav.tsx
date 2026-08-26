@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
-import geLogo from "@/assets/ge-logo.svg";
+import geLogo from "@/assets/ge-logo.png.asset.json";
 
 const SECTIONS = [
   { id: "home", label: "Home" },
@@ -80,7 +80,7 @@ export function SiteNav() {
           }}
         >
           <img
-            src={geLogo}
+            src={geLogo.url}
             alt="GE — Guna E logo"
             width={44}
             height={44}
