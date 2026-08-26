@@ -80,7 +80,7 @@ export function SiteNav() {
           }}
         >
           <img
-            src={geLogo}
+            src={geLogo.url}
             alt="GE — Guna E logo"
             width={44}
             height={44}
