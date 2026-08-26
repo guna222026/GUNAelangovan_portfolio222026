@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" fill="none">
+  <defs>
+    <linearGradient id="ge-accent" x1="7" y1="7" x2="37" y2="37" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9A7FF"/>
+      <stop offset="0.48" stop-color="#8B7CF6"/>
+      <stop offset="1" stop-color="#7157E8"/>
+    </linearGradient>
+  </defs>
+  <path
+    d="M35.5 12.4C32.7 8.3 27.9 5.7 22.5 5.7C13.5 5.7 6.2 13 6.2 22C6.2 31 13.5 38.3 22.5 38.3C27.9 38.3 32.7 35.7 35.5 31.6V22.1H26.7"
+    stroke="url(#ge-accent)"
+    stroke-width="4.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M20.3 13.1V30.9M20.3 13.1H34.7M20.3 22H31M20.3 30.9H34.7"
+    stroke="url(#ge-accent)"
+    stroke-width="3.3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M37.6 9.2L39 10.6L37.6 12L36.2 10.6L37.6 9.2Z" fill="#C8BCFF"/>
+</svg>

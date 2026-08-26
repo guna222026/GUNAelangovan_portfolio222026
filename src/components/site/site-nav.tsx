@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
-import geLogo from "@/assets/ge-logo.png";
+import geLogo from "@/assets/ge-logo.svg";
 
 const SECTIONS = [
   { id: "home", label: "Home" },
@@ -82,9 +82,9 @@ export function SiteNav() {
           <img
             src={geLogo}
             alt="GE — Guna E logo"
-            width={512}
-            height={512}
-            className="size-10 select-none transition-all duration-300 ease-out group-hover:scale-110 group-hover:drop-shadow-[0_0_14px_var(--primary)] sm:size-11"
+            width={44}
+            height={44}
+            className="size-10 select-none transition-all duration-300 ease-out group-hover:scale-105 group-hover:drop-shadow-[0_0_10px_var(--primary)] sm:size-11"
             draggable={false}
           />
         </Link>
