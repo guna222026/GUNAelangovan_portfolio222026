@@ -17,6 +17,7 @@ import {
   projectsCollection,
   statsCollection,
 } from "@/components/admin/collections";
+import { ProjectMediaManager } from "@/components/admin/project-media-manager";
 import { ProfileEditor } from "@/components/admin/profile-editor";
 import { SkillsManager } from "@/components/admin/skills-manager";
 import { MessagesPanel } from "@/components/admin/messages-panel";
@@ -110,6 +111,7 @@ function LoginCard() {
 const TABS = [
   { value: "profile", label: "Profile" },
   { value: "projects", label: "Projects" },
+  { value: "media", label: "Project media" },
   { value: "skills", label: "Skills" },
   { value: "experience", label: "Experience" },
   { value: "education", label: "Education" },
@@ -185,6 +187,9 @@ function AdminPage() {
         </TabsContent>
         <TabsContent value="projects">
           <CollectionManager config={projectsCollection} />
+        </TabsContent>
+        <TabsContent value="media">
+          <ProjectMediaManager />
         </TabsContent>
         <TabsContent value="skills">
           <SkillsManager />

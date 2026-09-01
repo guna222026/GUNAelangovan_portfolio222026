@@ -156,7 +156,22 @@ function ProjectDetail() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {media.map((item) => (
             <figure key={item.id} className="surface-card overflow-hidden">
-              <img src={item.url} alt={item.caption || project.title} loading="lazy" className="w-full object-cover" />
+              {item.kind === "video" ? (
+                <video
+                  src={item.url}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full bg-black"
+                />
+              ) : (
+                <img
+                  src={item.url}
+                  alt={item.caption || project.title}
+                  loading="lazy"
+                  className="w-full object-cover"
+                />
+              )}
               {item.caption && (
                 <figcaption className="p-4 text-xs text-muted-foreground">{item.caption}</figcaption>
               )}
