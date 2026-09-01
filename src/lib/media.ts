@@ -4,7 +4,10 @@
  * and downscaled before upload so huge phone photos don't ship to visitors.
  */
 
-export type MediaKind = "image" | "pdf" | "any";
+export type MediaKind = "image" | "video" | "pdf" | "any";
+
+const VIDEO_TYPES = ["video/mp4", "video/webm", "video/quicktime", "video/ogg"];
+const MAX_VIDEO_BYTES = 50 * 1024 * 1024; // 50 MB
 
 const IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
