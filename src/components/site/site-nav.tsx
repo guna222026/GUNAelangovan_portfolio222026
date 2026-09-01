@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
-import geLogo from "@/assets/ge-logo.png.asset.json";
+const GE_LOGO_SRC = "/ge-logo.png";
 
 const SECTIONS = [
   { id: "home", label: "Home" },
