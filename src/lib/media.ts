@@ -31,6 +31,15 @@ export function validateMediaFile(file: File, kind: MediaKind): void {
     }
     return;
   }
+  if (kind === "video") {
+    if (!VIDEO_TYPES.includes(file.type)) {
+      throw new Error("Please choose a video file (MP4, WebM, MOV or OGG).");
+    }
+    if (file.size > MAX_VIDEO_BYTES) {
+      throw new Error("That video is too large — maximum 50 MB.");
+    }
+    return;
+  }
   if (kind === "pdf") {
     if (file.type !== "application/pdf") {
       throw new Error("Please choose a PDF file.");
@@ -47,6 +56,7 @@ export function validateMediaFile(file: File, kind: MediaKind): void {
 
 export function acceptAttribute(kind: MediaKind): string | undefined {
   if (kind === "image") return Object.keys(IMAGE_TYPES).join(",");
+  if (kind === "video") return VIDEO_TYPES.join(",");
   if (kind === "pdf") return "application/pdf";
   return undefined;
 }
